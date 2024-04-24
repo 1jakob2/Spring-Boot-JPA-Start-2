@@ -1,6 +1,7 @@
 package ch.fhnw.pizza.controller;
 
 import ch.fhnw.pizza.business.service.MenuService;
+import ch.fhnw.pizza.data.domain.Menu;
 import ch.fhnw.pizza.data.domain.Pizza;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +45,20 @@ public class MenuController {
 
     @PostMapping(path="/pizzas", consumes="application/json", produces = "application/json")
     public ResponseEntity<Pizza> addPizza(@RequestBody Pizza pizza) {
-    try{
-        pizza = menuService.addPizza(pizza);
-        
-    } catch (Exception e) {
-        throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        try{
+            pizza = menuService.addPizza(pizza);
+            
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
 
+        }
+        return ResponseEntity.ok(pizza);
+        
     }
-    return ResponseEntity.ok(pizza);
     
-}
-    
+    @GetMapping(path="", produces = "application/json")
+    public Menu getMenu(@RequestParam String location) {
+
+        return menuService.getMenuByLocation(location);
+    }
 }
