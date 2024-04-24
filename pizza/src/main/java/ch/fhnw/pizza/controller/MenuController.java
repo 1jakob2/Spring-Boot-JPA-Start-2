@@ -57,7 +57,7 @@ public class MenuController {
     }
     
     @GetMapping(path="", produces = "application/json")
-    public Menu getMenu(@RequestParam String location) {
+    public Menu getMenu(@RequestParam String location) { // add /menu?location=Brugg to the URL
 
         return menuService.getMenuByLocation(location);
     }
